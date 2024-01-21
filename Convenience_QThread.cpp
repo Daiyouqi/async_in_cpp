@@ -183,3 +183,4 @@ bool  Convenience_QThread::Convenience_QThread::check_eligible() {
 		return false;
 	}
 }
+//如你有兴趣,可将类改成线程池.理论上可以不用std::map而用哈希表和链表达成o(1)复杂度
