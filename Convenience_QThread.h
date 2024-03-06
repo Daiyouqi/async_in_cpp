@@ -54,6 +54,6 @@ private:
 protected:
 	void run();
 signals:
-	void please_execute_callback(int uuid);
-	void delete_finish();
+	void please_execute_callback(int uuid);//请勿使用，这个信号是类内部使用的
+	void delete_finish();//当调用Async_delete异步删除接口后，准备删除工作完成时会发送这个信号
 };
