@@ -24,8 +24,7 @@ public:
 	void Async_delete();//请连接 delete_finish信号
 	//这个类是个QThread子类,在你删除它之前,
 	//请先调用这个函数将子线程通知主线程回调的逻辑删掉.
-	//然后,你可以按对QThread的逻辑删除这个对象.
-	//或者执行之后为了异步操作,可以先提取m_uuid_maker的值,连接please_execute_callback到你自己的回调看发出的信号是否是预期的uuid,以此判断QThread::run的终止与否
+	//异步删除思路为主动取消所有待执行任务,再断开回调执行对象.最后查询当前任务自增ID,添加一个空任务,当这个空任务执行完成后,发送delete_finish信号. 然后,可以按对未执行的QThread的方式删除对象.
 
 	/*外部接口4,用户的异步函数和回调函数调用,检查当前任务是否应该被提前终止*/
 	bool check_eligible();
