@@ -12,6 +12,7 @@ public:
 	int async_task(std::function<void()>task1, std::function<void()> task2);
 	//主接口,方便的将同步代码转成异步代码.第一个调用对象为qthread执行,第二个这个类所在线程执行的回调
 	int  sync_task(std::function<void()>task1, std::function<void()> task2);//同步测试代码
+
 	/*外部接口2:任务管理接口,如你不满意可自行添加*/
 	void cancel_task(int uuid);//删除指定任务,线程安全
 	void cancel_all_task();//删除所有任务,线程安全
