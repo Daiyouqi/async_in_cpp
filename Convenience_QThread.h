@@ -18,8 +18,7 @@ public:
 	void cancel_all_task();//删除所有任务,线程安全
 	void add_important_mark(int uuid);
 	//使一个任务为重要任务,无法被cancel_all_order撤单
-	//(这么做的原因是有些类如QTCpSocket锁定线程,在使用时用户在先初始化socket,后发送数据.
-	//用户可能有"清除所有的发送数据task,但保留初始化task"的需求
+	//比如网络通信中用户可能有"清除所有的发送数据task,但保留接受数据task"的需求
 
 	/*外部接口3,删除接口,异步*/
 	void Async_delete();//请连接 delete_finish信号
