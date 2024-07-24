@@ -10,7 +10,7 @@ void Test::SyncCalculate() { //模拟某同学代码风格及其使用方式
     setText(m_pi);
 }
 void Test::ASyncCalculate() {
-    int taskID=easyThread->async_task([=]() {
+    int taskID=easyThread->asyncTask([=]() {
         m_pi = 计算圆周率();
     }, [=]() {
         setText(m_pi);
