@@ -49,20 +49,20 @@ ConvenienceQThread::ConvenienceQThread(QThread* parent) :QThread(parent) {
 		}
 		});
 }
-int  ConvenienceQThread::asyncTask(std::function<void()>task, std::function<void()> callback)
+int  ConvenienceQThread::asyncTask(std::function<void()>task, std::function<void()> async_callback)
 {
 	m_raw_mutex.lock();
 	m_uuid_maker++;
-	m_raw_tasks.insert(make_pair(m_uuid_maker.load(), make_pair(task, callback)));
+	m_raw_tasks.insert(make_pair(m_uuid_maker.load(), make_pair(task, async_callback)));
 	m_raw_mutex.unlock();
 	start();
 	return  m_uuid_maker.load();
 }
-int  ConvenienceQThread::syncTask(std::function<void()>task, std::function<void()> callback)
+int  ConvenienceQThread::syncTask(std::function<void()>task, std::function<void()> sync_callback)
 {
 	m_uuid_maker++;
 	task();
-	callback();
+	sync_callback();
 	return m_uuid_maker.load();
 }
 void ConvenienceQThread::run()
@@ -127,14 +127,14 @@ void ConvenienceQThread::asyncDelete() {
 	m_delete_task_uuid = m_uuid_maker.load() + 1;
 	asyncTask([]() {}, []() {});
 }
-void  ConvenienceQThread::addImportantMark(int uuid) {
+void  ConvenienceQThread::addImportantMark(const int uuid) {
 	m_raw_mutex.lock();
 	m_boiled_mutex.lock();
 	m_important_tasks.insert(uuid);
 	m_boiled_mutex.unlock();
 	m_raw_mutex.unlock();
 };
-void ConvenienceQThread::cancelTask(int uuid) {
+void ConvenienceQThread::cancelTask(const int uuid) {
 	m_raw_mutex.lock();
 	m_raw_tasks.erase(uuid);
 	if (m_raw_status == uuid) m_raw_status = TASK_NEED_TO_BEEN_STOP;
