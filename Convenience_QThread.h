@@ -9,14 +9,14 @@ class ConvenienceQThread : public QThread
 	Q_OBJECT
 public:
 	/*外部接口1:添加任务接口*/
-	int asyncTask(std::function<void()>task, std::function<void()> callback);
+	int asyncTask(std::function<void()>task, std::function<void()> async_callback);
 	//主接口，方便的将同步代码转成异步代码。第一个调用对象为QThread执行，第二个这个类所在线程执行的回调
-	int syncTask(std::function<void()>task, std::function<void()> callback);//同步测试代码
+	int syncTask(std::function<void()>task, std::function<void()> sync_callback);//同步测试代码
 
 	/*外部接口2:任务管理接口，如你不满意可自行添加*/
-	void cancelTask(int uuid);//删除指定任务，线程安全
+	void cancelTask(const int uuid);//删除指定任务，线程安全
 	void cancelAllTask();//删除所有任务，线程安全
-	void addImportantMark(int uuid);
+	void addImportantMark(const int uuid);
 	//使一个任务为重要任务，无法被cancelAllTask撤单
 	//比如网络通信中用户可能有“清除所有的发送数据task，但保留接受数据task”的需求
 
