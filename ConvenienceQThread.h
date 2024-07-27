@@ -52,7 +52,7 @@ private:
 	bool m_is_async_delete = false;
 	int m_delete_task_uuid = 0;
 protected:
-	void run();
+	void run() override;
 signals:
 	void pleaseExecuteCallback(int uuid);//请勿使用，这个信号是类内部使用的
 	void deleteFinish();//当调用asyncDelete异步删除接口后，准备删除工作完成时会发送这个信号
